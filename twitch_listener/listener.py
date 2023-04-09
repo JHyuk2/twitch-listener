@@ -76,7 +76,11 @@ class connect_twitch(socket):
             for channel in self.joined:
                 sock = self._sockets[channel]
                 if sock in ready_socks:
-                    response = sock.recv(16384)
+                    # print('----------socket here-----------')
+                    response = sock.recv(16384).decode('utf-8')
+                    print(f'response here: {response}') #response cannot encode this.
+                    print('--------------------'*2)
+
                     if b"PING :tmi.twitch.tv\r\n" in response:
                         sock.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
                         if debug:
